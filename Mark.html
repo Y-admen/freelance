@@ -47,35 +47,13 @@
         <div class="player-info">
             <p><strong>Mark:</strong> <span id="final-score"></span></p>
         </div>
-        <button id="homeBtn" class="option-button">🏠 Play again</button>
-        <button id="exitBtn" class="option-button">🚪 Exit</button>
+        <button id="homeBtn" class="end-btn">🏠 Play again</button>
+        <button id="exitBtn" class="end-btn">🚪 Exit</button>
     </div>
 
     <audio id="win-sound" src="sounds/well down.mp3"></audio>
 
     <script src="WhatDoes.js"></script>
-    <script>
-        // Integrating score and sound for the end screen
-        window.addEventListener('load', () => {
-            const winSound = document.getElementById('win-sound');
-            winSound.play();
-        });
-
-        document.getElementById('homeBtn').addEventListener('click', () => {
-            window.location.href = 'What Does.html';
-        });
-
-        document.getElementById('exitBtn').addEventListener('click', () => {
-            window.location.href = 'https://englisheasy.net/dashboard'; // Your exit link
-        });
-
-        // Function to handle quiz end and show the final score
-        function endQuiz() {
-            document.getElementById('final-score').textContent = score + "/10"; // Assuming a maximum score of 10
-            document.getElementById('end-container').style.display = 'block'; // Show end screen
-            document.querySelector('.question-container').style.display = 'none'; // Hide question container
-        }
-    </script>
 </body>
 
 </html>

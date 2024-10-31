@@ -124,6 +124,22 @@ header {
     margin-bottom: 20px;
 }
 
+.end-btn {
+    background-color: #21848A;
+    color: #fcfcfc;
+    padding: 15px;
+    margin: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    border: none;
+    border-radius: 40px;
+    width: 200px;
+    font-family: 'DynaPuff', sans-serif;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.6);
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-bottom: 20px;
+}
+
 .option-button:hover {
     transform: scale(1.15);
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.202);

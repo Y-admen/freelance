@@ -25,7 +25,7 @@ const audioDatabase = {
 };
 
 // Questions array
-const questions = Array(10).fill({ text: "How many times did your teacher clap?" });
+const questions = Array(2).fill({ text: "How many times did your teacher clap?" });
 
 
 // DOM Elements
@@ -36,6 +36,8 @@ const balloonAnimation = document.getElementById("balloon-animation");
 const speechBubble = document.getElementById("speech-bubble");
 const optionButtons = document.querySelectorAll(".option-button");
 const endBage = document.getElementById("final-score");
+const homeBtn = document.getElementById('homeBtn');
+const exitBtn = document.getElementById('exitBtn');
 
 // Bubble positions for speech bubble
 const bubblePositions = [
@@ -265,9 +267,19 @@ function showCelebration() {
 
 // End the quiz and navigate to end page
 function endQuiz() {
-    endBage.style.display = "block";
-    endBage.innerText = `Your final score is: ${score}`;
+    document.getElementById('final-score').textContent = score + "/10"; // Assuming a maximum score of 10
+    document.getElementById('end-container').style.display = 'block'; // Show end screen
+    document.querySelector('.question-container').style.display = 'none'; // Hide question container
 }
+
+homeBtn.onclick = () => {
+    window.location.href = "./index.html";
+};
+
+exitBtn.onclick = () => {
+    window.location.href = "https://englisheasy.net/dashboard";
+};
+
 
 // Initialize the game
 function initializeGame() {
