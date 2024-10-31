@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=DynaPuff:wght@700&display=swap');
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: url('./images/bg.png') no-repeat center center;
+    background-size: cover;
+    margin: 0;
+}
+
+.container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    width: 400px;
+    height: 300px;
+    animation: rotateLogo 2s infinite alternate;
+}
+
+.start-button {
+    width: 600px;
+    height: 200px;
+    font-size: 120px;
+    font-family: 'DynaPuff', sans-serif;
+    color: #FFFFFF;
+    background-color: #8200b3;
+    border: none;
+    border-radius: 60px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    transition: transform 0.2s;
+    margin-bottom: 50px;
+}
+
+.start-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+}
+
+
+/* Responsive Design */
+
+@media (max-width: 1024px) {
+    .logo {
+        width: 300px;
+        height: 225px;
+    }
+    .start-button {
+        width: 500px;
+        height: 150px;
+        font-size: 90px;
+    }
+}
+
+@media (max-width: 768px) {
+    .logo {
+        width: 250px;
+        height: 190px;
+    }
+    .start-button {
+        width: 400px;
+        height: 130px;
+        font-size: 70px;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        width: 200px;
+        height: 150px;
+    }
+    .start-button {
+        width: 300px;
+        height: 100px;
+        font-size: 50px;
+    }
+}

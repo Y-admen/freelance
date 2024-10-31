@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="Main Menu.css">
+    <!-- Include the CSS for button styling -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Protest+Strike&display=swap" rel="stylesheet">
+    <title>Main Page</title>
+</head>
+
+<body>
+    <div class="container">
+        <img src="./images/logo.png" alt="Logo" class="logo">
+        <button id="startBtn" class="start-button">Play</button>
+    </div>
+
+    <audio id="main-audio" src="./sounds/english-easy.mp3"></audio>
+
+    <script>
+        // Function to navigate to the instructions page
+        function goToInstructions() {
+            playMainAudio();
+            setTimeout(() => {
+                window.location.href = "instructions.html"; // Redirect to instructions after a delay
+            }, 1000);
+        }
+
+        function startQuiz() {
+            window.location.href = "Mark.html"; // Redirect to the quiz page
+        }
+
+        // Audio files
+        const choosea = new Audio('./sounds/choodethecorrecta.mp3');
+        const choose = new Audio('./sounds/chooseTheCorrect.mp3');
+        const easy = new Audio('./sounds/english-easy.mp3');
+
+        function playMainAudio() {
+            easy.play(); // Play the main audio
+        }
+
+        function playChooseAudios() {
+            choose.play(); // Play choose audio
+            choose.onended = () => {
+                choosea.play(); // Play choose-a audio after the first finishes
+            };
+        }
+
+        window.onload = function() {
+            const button = document.getElementById('startBtn');
+            button.classList.add('slide-down'); // Add slide-down effect to button
+
+            // Check if on the instructions page to play choose audios
+            if (window.location.pathname.includes("instructions.html")) {
+                playChooseAudios();
+            }
+        };
+
+        // Event listener for the button click to start the game
+        document.getElementById('startBtn').addEventListener('click', goToInstructions);
+    </script>
+</body>
+
+</html>
