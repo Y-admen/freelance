@@ -14,13 +14,13 @@ const clap = new Audio('sounds/clap.wav');
 // Audio database with updated format
 const audioDatabase = {
     options: {
-        two: { en: './sounds/2.mp3', ar: './sounds/2-ar.mp3' },
-        three: { en: './sounds/3.mp3', ar: './sounds/3-ar.mp3' },
-        four: { en: './sounds/4.mp3', ar: './sounds/4-ar.mp3' },
-        five: { en: './sounds/5.mp3', ar: './sounds/5-ar.mp3' },
-        seven: { en: './sounds/7.mp3', ar: './sounds/7-ar.mp3' },
-        eight: { en: './sounds/8.mp3', ar: './sounds/8-ar.mp3' },
-        nine: { en: './sounds/9.mp3', ar: './sounds/9-ar.mp3' }
+        Two: { en: './sounds/2.mp3', ar: './sounds/2-ar.mp3' },
+        Three: { en: './sounds/3.mp3', ar: './sounds/3-ar.mp3' },
+        Four: { en: './sounds/4.mp3', ar: './sounds/4-ar.mp3' },
+        Five: { en: './sounds/5.mp3', ar: './sounds/5-ar.mp3' },
+        Seven: { en: './sounds/7.mp3', ar: './sounds/7-ar.mp3' },
+        Eight: { en: './sounds/8.mp3', ar: './sounds/8-ar.mp3' },
+        Nine: { en: './sounds/9.mp3', ar: './sounds/9-ar.mp3' }
     }
 };
 
@@ -49,15 +49,23 @@ const bubblePositions = [
 
 // Mapping numbers to text
 const numberToText = {
-    2: "two",
-    3: "three",
-    4: "four",
-    5: "five",
-    6: "six",
-    7: "seven",
-    8: "eight",
-    9: "nine"
+    2: "Two",
+    3: "Three",
+    4: "Four",
+    5: "Five",
+    6: "Six",
+    7: "Seven",
+    8: "Eight",
+    9: "Nine"
 };
+
+window.addEventListener('load', () => {
+    // Hide loading screen
+    document.getElementById('loading-screen').style.display = 'none';
+
+    // Show the main content
+    document.body.style.visibility = 'visible';
+});
 
 // Disable options during sound playback
 function disableButtons() {
@@ -186,6 +194,8 @@ function checkAnswer(selectedAnswer, correctAnswerText) {
             score++;
             scoreElement.innerText = score;
             currentQuestionIndex++;
+            const winAudio = new Audio('./sounds/win.mp3');
+            winAudio.play();
             if (currentQuestionIndex < questions.length) {
                 showQuestion(); // Show the next question
             } else {
@@ -194,7 +204,6 @@ function checkAnswer(selectedAnswer, correctAnswerText) {
             enableButtons();
         } else {
             score--;
-            console.log("Incorrect answer. New score:", score);
             scoreElement.innerText = score;
             updateSpeechBubblePosition(false);
             setTimeout(() => {
