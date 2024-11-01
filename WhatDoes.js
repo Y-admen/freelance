@@ -27,7 +27,6 @@ const audioDatabase = {
 // Questions array
 const questions = Array(8).fill({ text: "How many times did your teacher clap?" });
 
-
 // DOM Elements
 const questionText = document.getElementById("question-text");
 const scoreElement = document.getElementById("score");
@@ -119,7 +118,6 @@ function playClapsAndProceed(callback) {
     setTimeout(playClap, clapDelay); // Start clapping after delay
 }
 
-
 function createConfetti() {
     const confettiContainer = document.getElementById('confetti');
     confettiContainer.classList.remove('hidden'); // إظهار الفتافيت
@@ -174,7 +172,7 @@ function setOptions(correctCount) {
         button.innerText = answers[index];
         button.onclick = () => {
             disableButtons(); // Disable options on answer
-            checkAnswer(answers[index], correctText);
+            checkAnswer(answers[index], correctText, randomText);
         };
     });
 }
@@ -186,7 +184,7 @@ function generateRandomIncorrectAnswer(correctAnswer) {
 }
 
 // Check answer and play appropriate sounds
-function checkAnswer(selectedAnswer, correctAnswerText) {
+function checkAnswer(selectedAnswer, correctAnswerText, randomText) {
     const isCorrect = selectedAnswer === correctAnswerText;
     const feedbackAudio = isCorrect ? "./sounds/Excellent.mp3" : "./sounds/false.mp3";
 
@@ -214,6 +212,10 @@ function checkAnswer(selectedAnswer, correctAnswerText) {
             enableButtons(); // تأخير لمدة 1 ثانية قبل الانتقال للسؤال التالي
         }
     });
+
+    // Play the corresponding audio in both English and Arabic
+    const audioFiles = audioDatabase.options[randomText];
+    playSequentialSounds([new Audio(audioFiles.en), new Audio(audioFiles.ar)]);
 }
 
 // Function to play single sound files and execute callback after sound ends
@@ -279,7 +281,6 @@ homeBtn.onclick = () => {
 exitBtn.onclick = () => {
     window.location.href = "https://englisheasy.net/dashboard";
 };
-
 
 // Initialize the game
 function initializeGame() {
