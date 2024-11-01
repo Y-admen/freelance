@@ -1,6 +1,5 @@
 // Function to navigate to the instructions page
 function goToInstructions() {
-    playMainAudio();
     setTimeout(() => {
         window.location.href = "instructions.html"; // Redirect to instructions after a delay
     }, 1000);
@@ -13,11 +12,7 @@ function startQuiz() {
 // Audio files
 const choosea = new Audio('./sounds/choodethecorrecta.mp3');
 const choose = new Audio('./sounds/chooseTheCorrect.mp3');
-const easy = new Audio('./sounds/english-easy.mp3');
 
-function playMainAudio() {
-    easy.play(); // Play the main audio
-}
 
 function playChooseAudios() {
     choose.play(); // Play choose audio
