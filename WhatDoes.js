@@ -4,6 +4,8 @@ let currentQuestionIndex = 0;
 let soundEnabled = true;
 let isAnswering = false;
 let isSoundPlaying = false;
+let currentClapCount = 0;
+let currentOptions = [];
 
 // Audio setup
 const iknow = new Audio('sounds/i-know.mp3');
@@ -162,17 +164,18 @@ function showQuestion() {
 }
 
 // Set the options for the question with one correct and one random choice
-function setOptions(correctCount) {
-    const correctText = numberToText[correctCount];
-    const randomIncorrectAnswer = generateRandomIncorrectAnswer(correctCount);
+function setOptions(clapCount, options = null) {
+    currentClapCount = clapCount;
+    const correctText = numberToText[clapCount];
+    const randomIncorrectAnswer = generateRandomIncorrectAnswer(clapCount);
     const randomText = numberToText[randomIncorrectAnswer];
-    const answers = [correctText, randomText].sort(() => Math.random() - 0.5); // Shuffle
+    currentOptions = options || [correctText, randomText].sort(() => Math.random() - 0.5); // Shuffle if options are not provided
 
     optionButtons.forEach((button, index) => {
-        button.innerText = answers[index];
+        button.innerText = currentOptions[index];
         button.onclick = () => {
             disableButtons(); // Disable options on answer
-            const selectedAnswer = answers[index];
+            const selectedAnswer = currentOptions[index];
             const audioFiles = audioDatabase.options[selectedAnswer]; // Get the corresponding audio files
             if (audioFiles) {
                 playSequentialSounds([audioFiles.en, audioFiles.ar], () => {
@@ -205,9 +208,7 @@ function checkAnswer(selectedAnswer, correctAnswerText) {
             const winAudio = new Audio('./sounds/win.mp3');
             winAudio.play();
             if (currentQuestionIndex < questions.length) {
-                setTimeout(() => {
-                    showQuestion();
-                }, 2000);
+                showQuestion(); // Show the next question
             } else {
                 endQuiz();
             }
@@ -217,7 +218,16 @@ function checkAnswer(selectedAnswer, correctAnswerText) {
             scoreElement.innerText = score;
             updateSpeechBubblePosition(false);
             setTimeout(() => {
-                showQuestion(); // Show the next question
+                // Repeat the same question with the same number of claps and options
+                playSequentialSounds([HowMany.src, HowMany.src, HowManyA.src], () => {
+                    playClapsAndProceed(clapCount => {
+                        setOptions(currentClapCount, currentOptions);
+                        playSound('sounds/i-know.mp3');
+                        setTimeout(() => {
+                            updateSpeechBubblePosition(true);
+                        }, 1000);
+                    });
+                });
             }, 1000);
             enableButtons(); // تأخير لمدة 1 ثانية قبل الانتقال للسؤال التالي
         }
