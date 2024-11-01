@@ -25,7 +25,7 @@ const audioDatabase = {
 };
 
 // Questions array
-const questions = Array(2).fill({ text: "How many times did your teacher clap?" });
+const questions = Array(8).fill({ text: "How many times did your teacher clap?" });
 
 
 // DOM Elements

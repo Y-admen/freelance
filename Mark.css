@@ -196,6 +196,11 @@ header {
         font-size: 20px;
         padding: 10px;
     }
+    .end-btn {
+        width: 160px;
+        font-size: 20px;
+        padding: 10px;
+    }
     .speech-bubble {
         font-size: 20px;
         width: 90px;
@@ -219,6 +224,11 @@ header {
         width: 140px;
         font-size: 18px;
         padding: 8px;
+    }
+    .end-btn {
+        width: 160px;
+        font-size: 20px;
+        padding: 10px;
     }
     .speech-bubble {
         font-size: 18px;
