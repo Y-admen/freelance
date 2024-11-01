@@ -17,15 +17,16 @@ const audioDatabase = {
         Two: { en: './sounds/2.mp3', ar: './sounds/2-ar.mp3' },
         Three: { en: './sounds/3.mp3', ar: './sounds/3-ar.mp3' },
         Four: { en: './sounds/4.mp3', ar: './sounds/4-ar.mp3' },
+        Six: { en: './sounds/6.mp3', ar: './sounds/6-ar.mp3' },
         Five: { en: './sounds/5.mp3', ar: './sounds/5-ar.mp3' },
         Seven: { en: './sounds/7.mp3', ar: './sounds/7-ar.mp3' },
-        Eight: { en: './sounds/8.mp3', ar: './sounds/8-ar.mp3' },
+        Eight: { en: './sounds/8.mp3', ar: './sounds/8-ar(2).mp3' },
         Nine: { en: './sounds/9.mp3', ar: './sounds/9-ar.mp3' }
     }
 };
 
 // Questions array
-const questions = Array(8).fill({ text: "How many times did your teacher clap?" });
+const questions = Array(10).fill({ text: "How many times did your teacher clap?" });
 
 // DOM Elements
 const questionText = document.getElementById("question-text");
@@ -89,7 +90,7 @@ soundButton.onclick = () => {
         clap.pause();
         clap.currentTime = 0; // إعادة تعيين الصوت إلى البداية
 
-        playSequentialSounds([HowMany, HowMany, HowManyA], () => {
+        playSequentialSounds([HowMany.src, HowMany.src, HowManyA.src], () => {
             playClapsAndProceed(() => {
                 playSound('sounds/i-know.mp3');
                 updateSpeechBubblePosition(true);
@@ -148,7 +149,7 @@ function showQuestion() {
 
     disableButtons(); // Disable options at the start
 
-    playSequentialSounds([HowMany, HowMany, HowManyA], () => {
+    playSequentialSounds([HowMany.src, HowMany.src, HowManyA.src], () => {
         playClapsAndProceed(clapCount => {
             // Set the correct and random option
             setOptions(clapCount);
@@ -156,7 +157,6 @@ function showQuestion() {
             setTimeout(() => {
                 updateSpeechBubblePosition(true);
             }, 1000);
-
         });
     });
 }
@@ -172,7 +172,15 @@ function setOptions(correctCount) {
         button.innerText = answers[index];
         button.onclick = () => {
             disableButtons(); // Disable options on answer
-            checkAnswer(answers[index], correctText, randomText);
+            const selectedAnswer = answers[index];
+            const audioFiles = audioDatabase.options[selectedAnswer]; // Get the corresponding audio files
+            if (audioFiles) {
+                playSequentialSounds([audioFiles.en, audioFiles.ar], () => {
+                    checkAnswer(selectedAnswer, correctText);
+                });
+            } else {
+                checkAnswer(selectedAnswer, correctText);
+            }
         };
     });
 }
@@ -184,7 +192,7 @@ function generateRandomIncorrectAnswer(correctAnswer) {
 }
 
 // Check answer and play appropriate sounds
-function checkAnswer(selectedAnswer, correctAnswerText, randomText) {
+function checkAnswer(selectedAnswer, correctAnswerText) {
     const isCorrect = selectedAnswer === correctAnswerText;
     const feedbackAudio = isCorrect ? "./sounds/Excellent.mp3" : "./sounds/false.mp3";
 
@@ -197,7 +205,9 @@ function checkAnswer(selectedAnswer, correctAnswerText, randomText) {
             const winAudio = new Audio('./sounds/win.mp3');
             winAudio.play();
             if (currentQuestionIndex < questions.length) {
-                showQuestion(); // Show the next question
+                setTimeout(() => {
+                    showQuestion();
+                }, 2000);
             } else {
                 endQuiz();
             }
@@ -207,15 +217,11 @@ function checkAnswer(selectedAnswer, correctAnswerText, randomText) {
             scoreElement.innerText = score;
             updateSpeechBubblePosition(false);
             setTimeout(() => {
-                showQuestion(); // Show the next question// إعادة تفعيل الأزرار بعد الانتقال للسؤال التالي
+                showQuestion(); // Show the next question
             }, 1000);
             enableButtons(); // تأخير لمدة 1 ثانية قبل الانتقال للسؤال التالي
         }
     });
-
-    // Play the corresponding audio in both English and Arabic
-    const audioFiles = audioDatabase.options[randomText];
-    playSequentialSounds([new Audio(audioFiles.en), new Audio(audioFiles.ar)]);
 }
 
 // Function to play single sound files and execute callback after sound ends
@@ -232,19 +238,31 @@ function playSound(file, callback) {
 }
 
 // Play sounds sequentially
-function playSequentialSounds(sounds, callback) {
-    if (sounds.length === 0 || isSoundPlaying) {
+function playSequentialSounds(files, callback) {
+    if (files.length === 0 || isSoundPlaying) {
         if (callback) callback();
         return;
     }
 
-    const [firstSound, ...remainingSounds] = sounds;
+    const [firstFile, ...remainingFiles] = files;
+    if (typeof firstFile !== 'string') {
+        console.error(`Invalid audio file path: ${firstFile}`);
+        playSequentialSounds(remainingFiles, callback);
+        return;
+    }
+
+    const audio = new Audio(firstFile);
     isSoundPlaying = true; // Set flag to indicate a sound is playing
-    firstSound.play();
-    firstSound.onended = () => {
-        isSoundPlaying = false; // Reset flag when sound ends
-        playSequentialSounds(remainingSounds, callback);
-    };
+    audio.play().then(() => {
+        audio.onended = () => {
+            isSoundPlaying = false; // Reset flag when sound ends
+            playSequentialSounds(remainingFiles, callback);
+        };
+    }).catch(error => {
+        console.error(`Failed to play audio file: ${firstFile}`, error);
+        isSoundPlaying = false;
+        playSequentialSounds(remainingFiles, callback);
+    });
 }
 
 // Update speech bubble position based on the answer
