@@ -12,8 +12,13 @@
 </head>
 
 <body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <p>Loading...</p>
+    </div>
+
     <!-- Main Page Content -->
-    <div class="container" id="main-page">
+    <div class="container" id="main-page" style="display: none;">
         <img src="./images/logo.png" alt="Logo" id="mainPgLogo" class="logo">
         <button id="startBtn" class="start-button">Play</button>
     </div>
@@ -62,10 +67,6 @@
             <button id="homeBtn" class="end-btn">🏠 Play again</button>
             <button id="exitBtn" class="end-btn">🚪 Exit</button>
         </div>
-    </div>
-
-    <div id="loading-screen">
-        <p>Loading...</p>
     </div>
 
     <script src="./script.js"></script>

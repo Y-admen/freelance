@@ -25,8 +25,15 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #A47AE4;
+    background: url('./images/bg.png') no-repeat center center fixed;
+    /* Change this to your desired loading screen background image */
+    background-size: cover;
     z-index: 9999;
+}
+
+#loading-screen p {
+    font-size: 2rem;
+    color: #fff;
 }
 
 
@@ -127,7 +134,6 @@ body {
     align-items: center;
     position: relative;
     padding-top: 20px;
-    /* Add padding to the top */
 }
 
 header {
@@ -164,7 +170,7 @@ header .logo {
 
 .question-container {
     text-align: center;
-    /* Add margin to separate from header */
+    margin-top: 20px;
     max-width: 500px;
 }
 
