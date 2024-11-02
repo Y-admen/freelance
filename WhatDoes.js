@@ -102,18 +102,19 @@ soundButton.onclick = () => {
 };
 
 // Generate a random number of claps and play them after a delay
-function playClapsAndProceed(callback) {
-    const clapCount = Math.floor(Math.random() * 8) + 2; // Random number between 2 and 9
+function playClapsAndProceed(callback, clapCount = null) {
+    const count = clapCount !== null ? clapCount : Math.floor(Math.random() * 8) + 2; // Random number between 2 and 9 if not provided
+    currentClapCount = count;
     let currentClap = 0;
     const clapDelay = 2000; // Delay in milliseconds before starting the claps
 
     function playClap() {
-        if (currentClap < clapCount) {
+        if (currentClap < count) {
             clap.play();
             clap.onended = playClap;
             currentClap++;
         } else if (callback) {
-            callback(clapCount);
+            callback(count);
             enableButtons(); // Enable options after finishing clap sounds
         }
     }
@@ -208,7 +209,9 @@ function checkAnswer(selectedAnswer, correctAnswerText) {
             const winAudio = new Audio('./sounds/win.mp3');
             winAudio.play();
             if (currentQuestionIndex < questions.length) {
-                showQuestion(); // Show the next question
+                setTimeout(() => {
+                    showQuestion(); // Show the next question
+                }, 2000);
             } else {
                 endQuiz();
             }
@@ -226,7 +229,7 @@ function checkAnswer(selectedAnswer, correctAnswerText) {
                         setTimeout(() => {
                             updateSpeechBubblePosition(true);
                         }, 1000);
-                    });
+                    }, currentClapCount);
                 });
             }, 1000);
             enableButtons(); // تأخير لمدة 1 ثانية قبل الانتقال للسؤال التالي

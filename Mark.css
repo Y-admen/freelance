@@ -92,6 +92,7 @@ header {
     background: none;
     border: none;
     cursor: pointer;
+    margin-right: 5px;
 }
 
 .question-container {
@@ -179,21 +180,25 @@ header {
 }
 
 @media (max-width: 768px) {
+    body {
+        background-size: cover;
+    }
     .logo {
         width: 120px;
         height: 60px;
+        margin: 5px
     }
     .score {
-        font-size: 24px;
-        margin-right: 30px;
+        font-size: 20px;
         margin-top: 10px;
     }
     .question-text {
-        font-size: 30px;
+        font-size: 24px;
+        width: 400px;
     }
     .option-button {
-        width: 160px;
-        font-size: 20px;
+        width: 120px;
+        font-size: 16px;
         padding: 10px;
     }
     .end-btn {
@@ -202,27 +207,36 @@ header {
         padding: 10px;
     }
     .speech-bubble {
-        font-size: 20px;
-        width: 90px;
+        font-size: 16px;
+        width: 70px;
+        padding: 5px;
+        text-align: center;
     }
 }
 
 @media (max-width: 480px) {
+    body {
+        background-size: cover;
+        background-position: -13rem 0rem;
+    }
     .logo {
         width: 100px;
         height: 50px;
     }
     .score {
         font-size: 20px;
-        margin-right: 20px;
-        margin-top: 10px;
+        margin-right: 5px;
+        margin-top: 5px;
     }
     .question-text {
-        font-size: 24px;
+        font-size: 20px;
+        margin-right: 10px;
+        margin-left: 10px;
+        width: 300px;
     }
     .option-button {
-        width: 140px;
-        font-size: 18px;
+        width: 90px;
+        font-size: 14px;
         padding: 8px;
     }
     .end-btn {
@@ -231,8 +245,11 @@ header {
         padding: 10px;
     }
     .speech-bubble {
-        font-size: 18px;
-        width: 80px;
+        font-size: 10px;
+        width: 60px;
+    }
+    #sound-button {
+        font-size: 20px;
     }
 }
 

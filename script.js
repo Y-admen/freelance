@@ -12,7 +12,8 @@ function startQuiz() {
 // Audio files
 const choosea = new Audio('./sounds/choodethecorrecta.mp3');
 const choose = new Audio('./sounds/chooseTheCorrect.mp3');
-
+const instructionAudio = new Audio('./sounds/choodethecorrecta.mp3'); // Add instruction audio
+const quizAudio = new Audio('./sounds/how-many.mp3'); // Add quiz audio
 
 function playChooseAudios() {
     choose.play(); // Play choose audio
@@ -23,11 +24,15 @@ function playChooseAudios() {
 
 window.onload = function() {
     console.log('Window loaded');
-    const button = document.getElementById('startBtn');
-    if (button) {
-        button.classList.add('slide-down');
-    } else {
-        console.error('Element with ID "startBtn" not found.');
+
+    // Check for startBtn only on index.html
+    if (window.location.pathname.includes("index.html")) {
+        const button = document.getElementById('startBtn');
+        if (button) {
+            button.classList.add('slide-down');
+        } else {
+            console.error('Element with ID "startBtn" not found.');
+        }
     }
 
     if (window.location.pathname.includes("instructions.html")) {
@@ -45,10 +50,42 @@ window.onload = function() {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-    const startBtn = document.getElementById('startBtn');
-    if (startBtn) {
-        startBtn.addEventListener('click', goToInstructions);
-    } else {
-        console.error('Element with ID "startBtn" not found.');
+    // Check for startBtn only on index.html
+    if (window.location.pathname.includes("index.html")) {
+        const startBtn = document.getElementById('startBtn');
+        if (startBtn) {
+            startBtn.addEventListener('click', () => {
+                goToInstructions();
+                // Ensure audio playback is triggered by user interaction
+                choose.play();
+            });
+        } else {
+            console.error('Element with ID "startBtn" not found.');
+        }
+    }
+
+    // Play instruction audio on the instructions page
+    if (window.location.pathname.includes("instructions.html")) {
+        const startQuizButton = document.querySelector('.start-quiz-button');
+        if (startQuizButton) {
+            startQuizButton.addEventListener('click', () => {
+                instructionAudio.play();
+                instructionAudio.onended = startQuiz;
+            });
+        } else {
+            console.error('Element with class "start-quiz-button" not found.');
+        }
+    }
+
+    // Play quiz audio on the quiz page
+    if (window.location.pathname.includes("Mark.html")) {
+        const soundButton = document.getElementById('sound-button');
+        if (soundButton) {
+            soundButton.addEventListener('click', () => {
+                quizAudio.play();
+            });
+        } else {
+            console.error('Element with ID "sound-button" not found.');
+        }
     }
 });
