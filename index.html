@@ -12,9 +12,56 @@
 </head>
 
 <body>
-    <div class="container">
-        <img src="./images/logo.png" alt="Logo" class="logo">
+    <!-- Main Page Content -->
+    <div class="container" id="main-page">
+        <img src="./images/logo.png" alt="Logo" id="mainPgLogo" class="logo">
         <button id="startBtn" class="start-button">Play</button>
+    </div>
+
+    <!-- Instructions Page Content -->
+    <div id="instructions-page" style="display: none;">
+        <img src="./images/logo.png" alt="Logo" id="unsPgyPgLogo" class="logo">
+        <div class="instructions-container">
+            <p class="instruction-text">Choose the correct answer.</p>
+            <button class="start-quiz-button">Start</button>
+        </div>
+    </div>
+
+    <!-- Quiz Page Content -->
+    <div id="quiz-page" style="display: none;">
+        <header>
+            <img src="./images/logo.png" alt="Logo" class="logo">
+            <div class="score-sound">
+                <div class="score">
+                    Score: <span id="score">0</span>
+                    <button id="sound-button">🔊</button>
+                </div>
+            </div>
+        </header>
+
+        <div class="question-container">
+            <p class="question-text" id="question-text"></p>
+            <div class="options">
+                <button class="option-button">.........</button>
+                <button class="option-button">.........</button>
+            </div>
+            <div id="confetti" class="hidden"></div>
+        </div>
+
+        <div id="speech-bubble" class="speech-bubble">
+            <p>I know ....</p>
+        </div>
+
+        <div id="balloon-animation" class="hidden">🎉</div>
+
+        <div class="end-container" id="end-container" style="display: none;">
+            <h1>🎉 Your Score 🎉</h1>
+            <div class="player-info">
+                <p><strong>Mark:</strong> <span id="final-score"></span></p>
+            </div>
+            <button id="homeBtn" class="end-btn">🏠 Play again</button>
+            <button id="exitBtn" class="end-btn">🚪 Exit</button>
+        </div>
     </div>
 
     <div id="loading-screen">

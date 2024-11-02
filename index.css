@@ -1,13 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=DynaPuff:wght@700&display=swap');
+
+/* General Styles */
+
 body {
+    background: url('./images/freepik__photo-a-group-of-elementary-school-students-sittin__27.jpeg') no-repeat center center fixed;
+    background-size: cover;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     font-family: 'DynaPuff', sans-serif;
     height: 100vh;
-    background: url('./images/bg.png') no-repeat center center;
-    background-size: cover;
+    color: #fcfcfc;
     margin: 0;
+    visibility: hidden;
 }
 
 #loading-screen {
@@ -23,75 +29,419 @@ body {
     z-index: 9999;
 }
 
-.container {
-    text-align: center;
+
+/* Main Page Styles */
+
+#main-page {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
 }
 
-.logo {
+#main-page .logo {
     width: 400px;
     height: 300px;
     animation: rotateLogo 2s infinite alternate;
 }
 
-.start-button {
+#main-page .start-button {
     width: 600px;
     height: 200px;
     font-size: 120px;
-    font-family: 'DynaPuff', sans-serif;
     color: #FFFFFF;
-    background-color: #8200b3;
+    background-color: #A47AE4;
     border: none;
     border-radius: 60px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    font-family: 'DynaPuff', sans-serif;
     cursor: pointer;
     transition: transform 0.2s;
     margin-bottom: 50px;
 }
 
-.start-button:hover {
+#main-page .start-button:hover {
     transform: scale(1.1);
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+}
+
+
+/* Instructions Page Styles */
+
+#instructions-page {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#instructions-page .logo {
+    width: 300px;
+    height: 200px;
+    margin-top: 40px;
+}
+
+.instructions-container {
+    text-align: center;
+}
+
+.instruction-text {
+    font-size: 70px;
+    background-color: #A47AE4;
+    border-radius: 60px;
+    color: #ffffff;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.start-quiz-button {
+    width: 600px;
+    height: 150px;
+    font-size: 120px;
+    color: #ffffff;
+    background-color: #A47AE4;
+    border: none;
+    border-radius: 60px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    font-family: 'DynaPuff', sans-serif;
+    cursor: pointer;
+    transition: transform 0.2s;
+    margin-bottom: 50px;
+}
+
+.start-quiz-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+}
+
+
+/* Quiz Page Styles */
+
+#quiz-page {
+    height: 100vh;
+    width: 100%;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding-top: 20px;
+    /* Add padding to the top */
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    width: calc(100% - 20px);
+    position: relative;
+}
+
+header .logo {
+    width: 150px;
+    height: 80px;
+}
+
+.score-sound {
+    display: flex;
+    align-items: center;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+.score {
+    font-size: 30px;
+    color: #31D2F7;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+#sound-button {
+    font-size: 28px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.question-container {
+    text-align: center;
+    /* Add margin to separate from header */
+    max-width: 500px;
+}
+
+.question-text {
+    font-size: 40px;
+    margin-bottom: 10px;
+    display: flex;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.889);
+}
+
+.option-button {
+    background-color: #21848A;
+    color: #fcfcfc;
+    padding: 15px;
+    margin: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    border: none;
+    border-radius: 40px;
+    width: 200px;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.6);
+    transition: transform 0.2s, box-shadow 0.2s;
+    font-family: 'DynaPuff', sans-serif;
+    margin-bottom: 20px;
+}
+
+.option-button:hover {
+    transform: scale(1.15);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.202);
+}
+
+.end-btn {
+    background-color: #21848A;
+    color: #fcfcfc;
+    padding: 15px;
+    margin: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    border: none;
+    border-radius: 40px;
+    width: 200px;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.6);
+    transition: transform 0.2s, box-shadow 0.2s;
+    font-family: 'DynaPuff', sans-serif;
+    margin-bottom: 20px;
+}
+
+#balloon-animation {
+    font-size: 50px;
+    animation: celebration 1s infinite;
+    display: none;
+}
+
+.speech-bubble {
+    position: absolute;
+    background-color: #fff;
+    color: #333;
+    padding: 10px;
+    border-radius: 15px;
+    border-color: #31D2F7;
+    font-size: 26px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    width: 100px;
+    text-align: center;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.speech-bubble::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #fff;
+}
+
+#confetti {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.confetti-piece {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    opacity: 0.8;
+    animation: fall 1s forwards;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh) rotate(360deg);
+    }
+}
+
+.hidden {
+    display: none;
 }
 
 
 /* Responsive Design */
 
 @media (max-width: 1024px) {
-    .logo {
+    #main-page .logo {
         width: 300px;
         height: 225px;
     }
-    .start-button {
+    #main-page .start-button {
         width: 500px;
         height: 150px;
         font-size: 90px;
     }
+    header .logo {
+        width: 120px;
+        height: 60px;
+    }
+    .score {
+        font-size: 20px;
+    }
+    .question-text {
+        font-size: 28px;
+        width: 450px;
+    }
+    #quiz-page {
+        width: 800px;
+    }
+    .option-button {
+        width: 100px;
+        font-size: 16px;
+        padding: 10px;
+    }
 }
 
 @media (max-width: 768px) {
-    .logo {
+    #main-page .logo {
         width: 250px;
         height: 190px;
     }
-    .start-button {
+    #main-page .start-button {
         width: 400px;
         height: 130px;
         font-size: 70px;
     }
+    #instructions-page .logo {
+        width: 250px;
+        height: 160px;
+    }
+    .instruction-text {
+        font-size: 50px;
+        padding: 15px;
+    }
+    .start-quiz-button {
+        width: 500px;
+        height: 120px;
+        font-size: 90px;
+    }
+    header .logo {
+        width: 100px;
+        height: 50px;
+    }
+    .score {
+        font-size: 18px;
+    }
+    .question-text {
+        font-size: 24px;
+        width: 400px;
+    }
+    .option-button {
+        width: 120px;
+        font-size: 16px;
+        padding: 10px;
+    }
+    .end-btn {
+        width: 160px;
+        font-size: 20px;
+        padding: 10px;
+    }
+    .speech-bubble {
+        font-size: 16px;
+        width: 70px;
+        padding: 5px;
+        text-align: center;
+    }
+    #quiz-page {
+        height: 650px;
+        width: 600px;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+    }
 }
 
 @media (max-width: 480px) {
-    .logo {
+    body {
+        background-size: cover;
+        background-position: -13rem 0rem;
+    }
+    #main-page .logo {
         width: 200px;
         height: 150px;
     }
-    .start-button {
-        width: 300px;
+    #main-page .start-button {
+        width: 200px;
         height: 100px;
         font-size: 50px;
+    }
+    #instructions-page .logo {
+        width: 200px;
+        height: 130px;
+        margin-top: 20px;
+    }
+    .instruction-text {
+        font-size: 26px;
+        padding: 10px;
+        border-radius: 40px;
+    }
+    .start-quiz-button {
+        width: 90vw;
+        height: 100px;
+        font-size: 50px;
+        border-radius: 40px;
+        margin-bottom: 30px;
+    }
+    header .logo {
+        width: 80px;
+        height: 40px;
+        margin-left: 10px;
+    }
+    .score {
+        font-size: 16px;
+    }
+    #sound-button {
+        font-size: 20px;
+    }
+    .question-text {
+        font-size: 20px;
+        margin-right: 10px;
+        margin-left: 10px;
+        width: 300px;
+    }
+    .option-button {
+        width: 90px;
+        font-size: 14px;
+        padding: 8px;
+    }
+    .end-btn {
+        width: 160px;
+        font-size: 20px;
+        padding: 10px;
+    }
+    .speech-bubble {
+        font-size: 10px;
+        width: 60px;
+    }
+    #sound-button {
+        font-size: 20px;
+    }
+    #quiz-page {
+        height: 650px;
+        width: 300px;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (forced-colors: active) {
+    body {
+        forced-color-adjust: auto;
     }
 }
