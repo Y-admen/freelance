@@ -109,10 +109,8 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Element with class "start-quiz-button" not found.');
     }
 
-    const clapButton = document.getElementById('clapButton');
     if (clapButton) {
         clapButton.addEventListener('click', () => {
-            const options = document.getElementById('options');
             options.style.display = 'flex';
             clapButton.style.display = 'none';
             playClapsAndProceed(() => {
@@ -193,6 +191,9 @@ const optionButtons = document.querySelectorAll(".option-button");
 const endBage = document.getElementById("final-score");
 const homeBtn = document.getElementById('homeBtn');
 const exitBtn = document.getElementById('exitBtn');
+const options = document.getElementById('options');
+const clapButton = document.getElementById('clapButton');
+
 
 // Bubble positions for speech bubble
 const bubblePositionsRegular = [
@@ -295,10 +296,18 @@ function showQuestion() {
     const question = questions[currentQuestionIndex];
     questionText.innerText = question.text;
 
-    disableButtons(); // Disable options at the start
+    // Reset the display states for options and clap button
+    options.style.display = 'none';
+    clapButton.style.display = 'flex';
+    speechBubble.style.display = 'none';
 
+    // Disable option buttons at the start
+    disableButtons();
+
+    // Play the question audio sequence
     playSequentialSounds([HowMany.src, HowMany.src, HowManyA.src]);
 }
+
 
 // Set the options for the question with one correct and one random choice
 function setOptions(clapCount, options = null) {
