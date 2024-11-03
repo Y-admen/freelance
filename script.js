@@ -109,6 +109,32 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Element with class "start-quiz-button" not found.');
     }
 
+    const clapButton = document.getElementById('clapButton');
+    if (clapButton) {
+        clapButton.addEventListener('click', () => {
+            const options = document.getElementById('options');
+            options.style.display = 'flex';
+            clapButton.style.display = 'none';
+            playClapsAndProceed(() => {
+                // Generate the options array here before passing it
+                const correctText = numberToText[currentClapCount];
+                const randomIncorrectAnswer = generateRandomIncorrectAnswer(currentClapCount);
+                const randomText = numberToText[randomIncorrectAnswer];
+                const newOptions = [correctText, randomText].sort(() => Math.random() - 0.5);
+
+                setOptions(currentClapCount, newOptions);
+                setTimeout(() => {
+                    updateSpeechBubblePosition(true);
+                    iknow.play()
+                }, 1000);
+            }, null);
+        });
+
+
+    } else {
+        console.error('Element with ID "clapButton" not found.');
+    }
+
     // const soundButton = document.getElementById('sound-button');
     // if (soundButton) {
     //     soundButton.addEventListener('click', () => {
@@ -216,14 +242,14 @@ soundButton.onclick = () => {
     };
 }
 
-// Generate a random number of claps and play them after a delay
 function playClapsAndProceed(callback, clapCount = null) {
-    const count = clapCount !== null ? clapCount : Math.floor(Math.random() * 8) + 2; // Random number between 2 and 9 if not provided
+    const count = clapCount !== null ? clapCount : Math.floor(Math.random() * 8) + 2;
     currentClapCount = count;
     let currentClap = 0;
-    const clapDelay = 2000; // Delay in milliseconds before starting the claps
+    const clapDelay = 2000;
 
     function playClap() {
+        console.log('Playing clap', currentClap + 1, 'of', count); // Add this line
         if (currentClap < count) {
             clap.play().then(() => {
                 clap.onended = playClap;
@@ -233,12 +259,13 @@ function playClapsAndProceed(callback, clapCount = null) {
             });
         } else if (callback) {
             callback(count);
-            enableButtons(); // Enable options after finishing clap sounds
+            enableButtons();
         }
     }
 
-    setTimeout(playClap, clapDelay); // Start clapping after delay
+    setTimeout(playClap, clapDelay);
 }
+
 
 function createConfetti() {
     const confettiContainer = document.getElementById('confetti');
@@ -270,16 +297,7 @@ function showQuestion() {
 
     disableButtons(); // Disable options at the start
 
-    playSequentialSounds([HowMany.src, HowMany.src, HowManyA.src], () => {
-        playClapsAndProceed(clapCount => {
-            // Set the correct and random option
-            setOptions(clapCount);
-            playSound('sounds/i-know.mp3');
-            setTimeout(() => {
-                updateSpeechBubblePosition(true);
-            }, 1000);
-        });
-    });
+    playSequentialSounds([HowMany.src, HowMany.src, HowManyA.src]);
 }
 
 // Set the options for the question with one correct and one random choice
@@ -362,23 +380,49 @@ function checkAnswer(selectedAnswer, correctAnswerText) {
 function playSound(file, callback) {
     if (isSoundPlaying) return;
     const audio = new Audio(file);
-    isSoundPlaying = true;
-    audio.play().then(() => {
-        audio.onended = () => {
-            isSoundPlaying = false;
-            if (callback) callback();
-            enableButtons(); // Enable options after sound ends
-        };
-    }).catch(error => {
-        console.error(`Failed to play audio file: ${file}`, error);
-        isSoundPlaying = false;
-        if (callback) callback();
-        enableButtons(); // Enable options if audio fails
+
+    // Add loading check
+    audio.addEventListener('canplaythrough', () => {
+        console.log(`${file} loaded and ready to play`);
     });
+
+    isSoundPlaying = true;
+
+    // Add iOS specific handling
+    const playPromise = audio.play();
+
+    if (playPromise !== undefined) {
+        playPromise
+            .then(() => {
+                console.log(`${file} playing successfully`);
+                audio.onended = () => {
+                    isSoundPlaying = false;
+                    if (callback) callback();
+                    enableButtons();
+                };
+            })
+            .catch(error => {
+                console.error(`Failed to play ${file}:`, error);
+                isSoundPlaying = false;
+                if (callback) callback();
+                enableButtons();
+            });
+    }
+}
+// Test function to check if playClapsAndProceed is triggered by user interaction
+function testUserInteraction() {
+    const event = window.event;
+    if (event) {
+        console.log('playClapsAndProceed triggered by user interaction:', event.type);
+    } else {
+        console.log('playClapsAndProceed not triggered by user interaction');
+    }
 }
 
 // Play sounds sequentially
 function playSequentialSounds(files, callback) {
+    console.log('playClapsAndProceed triggered by user interaction: ended');
+    testUserInteraction()
     if (files.length === 0 || isSoundPlaying) {
         if (callback) callback();
         return;

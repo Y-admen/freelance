@@ -26,7 +26,6 @@ body {
     align-items: center;
     justify-content: center;
     background: url('./images/bg.png') no-repeat center center fixed;
-    /* Change this to your desired loading screen background image */
     background-size: cover;
     z-index: 9999;
 }
@@ -182,6 +181,22 @@ header .logo {
 }
 
 .option-button {
+    background-color: #21848A;
+    color: #fcfcfc;
+    padding: 15px;
+    margin: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    border: none;
+    border-radius: 40px;
+    width: 200px;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.6);
+    transition: transform 0.2s, box-shadow 0.2s;
+    font-family: 'DynaPuff', sans-serif;
+    margin-bottom: 20px;
+}
+
+#clapButton {
     background-color: #21848A;
     color: #fcfcfc;
     padding: 15px;
